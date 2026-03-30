@@ -1,10 +1,7 @@
 import tempfile
 from langchain_community.document_loaders import PyPDFLoader, TextLoader, Docx2txtLoader
-from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_community.vectorstores import Chroma
-from langchain_openai import OpenAIEmbeddings
 
-def load_documents(files):
+def load_files(files):
     documents = []
 
     for file in files:
@@ -21,9 +18,4 @@ def load_documents(files):
 
         documents.extend(loader.load())
 
-    splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
-    docs = splitter.split_documents(documents)
-
-    embeddings = OpenAIEmbeddings()
-
-    return Chroma.from_documents(docs, embeddings)
+    return documents

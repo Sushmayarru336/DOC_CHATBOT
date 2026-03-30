@@ -1,29 +1,46 @@
-from langchain.prompts import PromptTemplate
+from langchain_core.prompts import PromptTemplate
 
-def get_prompt():
-    template =  """
-You are an intelligent assistant.
+def get_prompts():
 
-Use the context to answer the question.
+    map_prompt = PromptTemplate(
+        template="""
+        Use the following context to answer the question.
 
-List ALL relevant information from the context.
-Do not summarize only one item.
+        Context:
+        {context}
 
-If multiple items exist, list ALL of them clearly.
+        Question:
+        {question}
 
-If the answer requires combining multiple pieces of information
-or simple reasoning (like calculating duration), do it.
-
-Do NOT make up answers.
-If unsure, say you don't know.
-
-Context:
-{context}
-
-Question:
-{question}
-"""
-    return PromptTemplate(
-        template=template,
-        input_variables=["context", "question"]
+        Answer:
+        """,
+        input_variables=["context", "question"],
     )
+
+    refine_prompt = PromptTemplate(
+        template="""
+        You are a document assistant.
+
+        Improve the existing answer using the new context below.
+
+        Rules:
+        - Combine all useful information
+        - Give complete answer
+        - Do NOT guess
+        - If not found, keep previous answer
+
+        Existing Answer:
+        {existing_answer}
+
+        New Context:
+        {context}
+
+        Question:
+        {question}
+
+        Updated Answer:
+        """,
+        input_variables=["existing_answer", "context", "question"],
+    )
+
+    return map_prompt, refine_prompt
