@@ -1,4 +1,4 @@
-# 🤖 AI Document Assistant - DOC_CHATBOT (ChatGPT-style RAG App)
+# 🤖 AI Document Assistant - DOC_CHATBOT (RAG App)
 
 A **production-ready AI document chatbot** built using **Streamlit + LangChain + OpenAI**, designed to answer questions from uploaded documents with **no hallucination**.
 
