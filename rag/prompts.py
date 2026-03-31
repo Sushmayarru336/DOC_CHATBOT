@@ -2,21 +2,23 @@ from langchain_core.prompts import PromptTemplate
 
 def get_prompts():
 
+    # LangChain's refine chain requires `context_str` (not `context`) for the initial prompt
     map_prompt = PromptTemplate(
         template="""
         Use the following context to answer the question.
 
         Context:
-        {context}
+        {context_str}
 
         Question:
         {question}
 
         Answer:
         """,
-        input_variables=["context", "question"],
+        input_variables=["context_str", "question"],
     )
 
+    # LangChain's refine chain requires `context_str` (not `context`) and `existing_answer`
     refine_prompt = PromptTemplate(
         template="""
         You are a document assistant.
@@ -33,14 +35,14 @@ def get_prompts():
         {existing_answer}
 
         New Context:
-        {context}
+        {context_str}
 
         Question:
         {question}
 
         Updated Answer:
         """,
-        input_variables=["existing_answer", "context", "question"],
+        input_variables=["existing_answer", "context_str", "question"],
     )
 
     return map_prompt, refine_prompt

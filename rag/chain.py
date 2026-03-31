@@ -1,5 +1,5 @@
 from langchain_openai import ChatOpenAI
-from langchain.chains.retrieval_qa.base import RetrievalQA
+from langchain.chains import RetrievalQA
 from rag.prompts import get_prompts
 
 def get_qa_chain(db):
